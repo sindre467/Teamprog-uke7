@@ -1,1 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <script src="script.js"></script>
 
+    <div id="app"></div>
+    
+
+    <script>
+        app = document.getElementById('app');
+        show();
+        function show() {
+            let startSite = `
+                <div id="characterStats">
+                    Level ${playerLevel}<br>
+                    Gold ${playerGold} <br>
+                    HP ${playerHP}<br>
+                    Damage ${damageDisplay}<br>
+                    Critical bonus ${critBonus}<br>
+                    Dodge bonus ${dodgeBonus}
+                </div>
+                <div id="battle" onclick="changeSite(1)">normal battle</div>
+                <div id="store" onclick="changeSite(2)">store</div>
+                <div id="tournament" onclick="changeSite(3)">tournament</div>`;
+
+            let battleSite = `
+                <div id="battleGround">
+                    <div id="player">
+                        <div id=playerHP></div>
+                        <div id="playerCharacter"></div>
+                    </div>
+                    <div id="npc">
+                        <div id=npcHP></div>
+                        <div id="npcCharacter"></div>
+                    </div>
+                    <div id="attack" onclick="playerAttack()">Attack</div>
+                </div>
+                `;
+
+            let storeSite = `
+                <div id="insideStore">
+                    <div id="storeShelfes">
+                        <div id="shelf1">
+                            <div class="items">item1</div>
+                            <div class="items">item2</div> 
+                            <div class="items">item3</div> 
+                        </div>
+                        <div id="shelf2">
+                            <div class="items">item4</div>
+                            <div class="items">item5</div> 
+                            <div class="items">item6</div> 
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            let tournamentSite = `
+                <div id="battleGround">
+                    <div id="player">
+                        <div id=playerHP></div>
+                        <div id="playerCharacter"></div>
+                    </div>
+                    <div id="npc">
+                        <div id=npcHP></div>
+                        <div id="npcCharacter"></div>
+                    </div>
+                </div>
+                `;
+
+
+            if (whichSite == 0) {
+                app.innerHTML = startSite;
+            }
+            if (whichSite == 1 ) {
+                app.innerHTML = battleSite;
+            }
+            if (whichSite == 2) {
+                app.innerHTML = storeSite;
+            }
+            if (whichSite == 3 ) {
+                app.innerHTML = tournamentSite;
+            }
+        }
+
+    </script>
+    
+</body>
+</html>

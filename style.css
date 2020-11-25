@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+#app {
+    height: 100vh;
+    width: 100vw;
+}
+
+/* startSite CSS */
+#characterStats {
+    width: 20%;
+    height: 20%;
+    background-color: aqua;
+}
+#battle {
+    width: 20%;
+    height: 20%;
+    background-color: green;
+}
+#store {
+    width: 20%;
+    height: 20%;
+    background-color: rgb(31, 55, 134);
+}
+#tournament {
+    width: 20%;
+    height: 20%;
+    background-color: rgb(127, 36, 139);
+}
+
+/* battleSite CSS and tournamentSite CSS*/
+#battleGround {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 25%;
+}
+
+#playerHP {
+    height: 20px;
+    width: 200px;
+    background-color: green;
+}
+#npcHP {
+    height: 20px;
+    width: 200px;
+    background-color: green;
+}
+#playerCharacter {
+    width: 100px;
+    height: 100px;
+    background-color: hotpink;
+    border-radius: 50%;
+}
+#npcCharacter {
+    width: 100px;
+    height: 100px;
+    background-color: rgb(47, 170, 153);
+    border-radius: 50%;
+}
+
+/* storeSite CSS */
+#insideStore {
+    width: 100%;
+    height: 100%;
+}
+#storeShelfes {
+    background-color: hotpink;
+    width: 50%;
+    margin: auto;
+    height: 10%;
+}
+#shelf1 {
+    clear: left;
+}
+#shelf2 {
+    clear: left;
+}
+.items {
+    float: left;
+    width: 20%;
+    height: 20%;
+}
