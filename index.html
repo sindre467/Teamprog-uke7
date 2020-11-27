@@ -16,60 +16,63 @@
         app = document.getElementById('app');
         show();
         function show() {
+            damageDisplay = (10 + playerDamageBonus) * playerLevel;
             let startSite = `
                 <div id="characterStats">
                     Level ${playerLevel}<br>
                     Gold ${playerGold} <br>
                     HP ${playerHP}<br>
                     Damage ${damageDisplay}<br>
-                    Critical bonus ${critBonus}<br>
-                    Dodge bonus ${dodgeBonus}
+                    Critical bonus ${playerCritBonus}<br>
+                    Dodge bonus ${playerDodgeBonus}
                 </div>
-                <div id="battle" onclick="changeSite(1)">normal battle</div>
-                <div id="store" onclick="changeSite(2)">store</div>
-                <div id="tournament" onclick="changeSite(3)">tournament</div>`;
+                <div id="battle" onclick="startBattle(1)">normal battle</div>
+                <div id="store" onclick="openStore()">store</div>
+                <div id="createTournamentButton" onclick="createTournament()">tournament</div>`;
 
             let battleSite = `
                 <div id="battleGround">
                     <div id="player">
-                        <div id=playerHP></div>
+                        <div class="Logs">
+                            <div class="CritLog">${playerCritLog}</div>
+                            <div class="DodgeLog">${playerDodgeLog}</div>
+                            <div class="DamageLog">${playerDamageLog}</div>
+                        </div><br>
+                        <div>Lvl ${playerLevel}</div>
+                        <div id=playerHP><div style="background-color: rgb(${playerColorRed},${playerColorGreen},0); width: ${playerHPBar}%; height: 100%;">${playerHP}</div></div>
                         <div id="playerCharacter"></div>
                     </div>
                     <div id="npc">
-                        <div id=npcHP></div>
+                        <div class="Logs">
+                            <div class="CritLog">${npcCritLog}</div>
+                            <div class="DodgeLog">${npcDodgeLog}</div>
+                            <div class="DamageLog">${npcDamageLog}</div>
+                        </div><br>
+                        <div>Lvl ${npcLevel}</div>
+                        <div id=npcHP><div style="background-color: rgb(${npcColorRed},${npcColorGreen},0); width: ${npcHPBar}%; height: 100%;">${npcHP}</div></div>
                         <div id="npcCharacter"></div>
                     </div>
-                    <div id="attack" onclick="playerAttack()">Attack</div>
                 </div>
+                <div id="attack" onclick="playerAttack()">Attack</div>
                 `;
-
-            let storeSite = `
-                <div id="insideStore">
-                    <div id="storeShelfes">
-                        <div id="shelf1">
-                            <div class="items">item1</div>
-                            <div class="items">item2</div> 
-                            <div class="items">item3</div> 
-                        </div>
-                        <div id="shelf2">
-                            <div class="items">item4</div>
-                            <div class="items">item5</div> 
-                            <div class="items">item6</div> 
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            let tournamentSite = `
+            
+                let resultSite = `
                 <div id="battleGround">
                     <div id="player">
-                        <div id=playerHP></div>
+                        <div id=playerHP><div style="background-color: rgb(${playerColorRed},${playerColorGreen},0); width: ${playerHPBar}%">${playerHP}</div></div>
                         <div id="playerCharacter"></div>
                     </div>
                     <div id="npc">
-                        <div id=npcHP></div>
+                        <div id=npcHP><div style="background-color: rgb(${npcColorRed},${npcColorGreen},0); width: ${npcHPBar}%">${npcHP}</div></div>
                         <div id="npcCharacter"></div>
                     </div>
+                </div>
+                <div id="attack">Attack</div>
+                <div id="resultPopup">
+                    <div id="winOrLoss">${winOrLose}</div>
+                    <div id="goldWon">Gold Won<br>${Gold}</div>
+                    <div id="leaveBattle" onclick="changeSite(0)">Leave Battle</div>
+                    <div id="xpEarned">Experience Earned<br>${XP}</div>
                 </div>
                 `;
 
@@ -86,7 +89,62 @@
             if (whichSite == 3 ) {
                 app.innerHTML = tournamentSite;
             }
+            if (whichSite == 4 ) {
+                app.innerHTML = resultSite;
+            }
         }
+
+        // store
+
+function openStore() {
+    damageDisplay = (10 + playerDamageBonus) * playerLevel;
+    let html = '';
+    html = `<div id="characterStats">
+                Level ${playerLevel}<br>
+                Gold ${playerGold} <br>
+                HP ${playerHP}<br>
+                Damage ${damageDisplay}<br>
+                Critical bonus ${playerCritBonus}<br>
+                Dodge bonus ${playerDodgeBonus}
+            </div>
+            <div id="insideStore">`;
+    for(let i = 0; i<storeItems.length; i++) {
+            html += `<div class="item" ${storeItems[i].inStock ? 'onclick="purchaseItem('+i+')"' : ''}>
+                        <div>${storeItems[i].item}</div>
+                        <div>${storeItems[i].look}</div>
+                        <div>${storeItems[i].inStock ? storeItems[i].price : 'Sold Out'}</div>
+                    </div>
+                    `;
+    }
+
+    html += `</div>
+    <div onclick="changeSite(0)">Leave Store</div>`;
+    app.innerHTML = html;
+}
+
+function createTournament() {
+    let html = '<div id="tournament">';
+
+    for (let i = 0; i < champions.length; i++) {
+        let damage = calcChampionDisplayDamage(i);
+
+        html += `<ul>
+                    <li>${champions[i].name}</li>
+                    <li>Lvl ${champions[i].stats[0]}</li>
+                    <li>HP ${champions[i].stats[1]}</li>
+                    <li>Damage ${damage}</li>
+                    <li>Critical Bonus ${champions[i].stats[3]}</li>
+                    <li>Dodge Bonus ${champions[i].stats[4]}</li>
+                </ul>
+                
+        `;
+    }
+    html += `</div>
+            <div id="tournamentButton">Enter Tournament</div>
+            <div onclick="changeSite(0)">Leave Tournament</div>
+            `;
+    app.innerHTML = html;
+}
 
     </script>
     
